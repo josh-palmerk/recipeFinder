@@ -10,6 +10,7 @@ try:
 except:
     print("Config file error. Please arrange DB credentials as db_config <dict> in config.py")
 
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -64,7 +65,8 @@ class MainWindow(QMainWindow):
 
         # Connect signals
         self.query_type_combo.currentIndexChanged.connect(self.handle_query_type_change)
-        # if self.columns_list is not type('NoneType'): self.table_combo.currentIndexChanged.connect(self.adjust_list_widget_height(self.columns_list))
+        # if self.columns_list is not type('NoneType'): 
+        #   self.table_combo.currentIndexChanged.connect(self.adjust_list_widget_height(self.columns_list))
 
         self.table_combo.currentIndexChanged.connect(self.populate_columns_list)
 
@@ -72,10 +74,9 @@ class MainWindow(QMainWindow):
         self.populate_columns_list()
         self.select_data(self.table_combo.currentText(), [self.columns_list.item(i).text() for i in range(self.columns_list.count())])
 
-    def adjust_list_widget_height(self, list_widget):
+    def adjust_list_widget_height(self, list_widget) -> None:
         # Calculate the total height based on the height of each item
         total_height = sum(list_widget.sizeHintForRow(row) for row in range(list_widget.count()))
-
         list_widget.setFixedHeight(total_height)
 
     def handle_query_type_change(self, index):
@@ -166,26 +167,8 @@ class MainWindow(QMainWindow):
         self.table.setColumnCount(0)
         self.table.setHorizontalHeaderLabels([])
 
-        # # Get selected table
-        # selected_table = self.table_combo.currentText()
-        # 
-        # # Connect to MySQL database
-        # conn = mysql.connector.connect(**db_config)
-        # cursor = conn.cursor()
-        # 
-        # # Execute DESCRIBE query to get column names
-        # cursor.execute(f"DESCRIBE {selected_table}")
-        # 
-        # # Fetch column names
-        # columns = cursor.fetchall()
-
-        # Populate column headers
         self.table.setColumnCount(len(column_data))
         self.table.setHorizontalHeaderLabels([column[0] for column in column_data])
-
-        # Close connection
-        # cursor.close()
-        # conn.close()
 
     def execute_query(self):
         # Get selected query type
@@ -218,11 +201,7 @@ class MainWindow(QMainWindow):
         conn = mysql.connector.connect(**db_config)
         cursor = conn.cursor()
 
-        # Construct the list of column names separated by commas
-        # columns_str = ', '.join(columns)
-
         # Define the SQL query with placeholders for table and column
-
         query = f"SELECT {', '.join(columns)} FROM {table}"
 
         # Execute SELECT query with parameters
@@ -265,7 +244,7 @@ class MainWindow(QMainWindow):
         # Connect to MySQL database
         conn = mysql.connector.connect(**db_config)
         cursor = conn.cursor()
-        #user_input_int = int(user_input_int.text())
+        # user_input_int = int(user_input_int.text())
         # Example UPDATE query
         query = f"UPDATE {table} SET {column[0]} = {user_input_txt} WHERE {table}_id = {user_input_int}"
         cursor.execute(query)
@@ -294,6 +273,7 @@ class MainWindow(QMainWindow):
 
         # Refresh table
         self.refresh_table()
+
 
 class IntegerLineEdit(QLineEdit):
     def __init__(self, parent=None):
