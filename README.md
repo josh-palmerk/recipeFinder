@@ -2,7 +2,7 @@
 
 **Project Title**: RecipeBase
 
-**Project Description**: Basic mySQL GUI for interacting with a recipe database
+**Project Description**: Basic mySQL GUI for interacting with a recipe database (or any database)
 
 **Project Goals**: Learn SQL syntax/formating, use tools from mySQL, learn pyQT, increase capability to manage generative AI use.
 
